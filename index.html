@@ -1,147 +1,691 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>Yusuke Contextofolio</title>
-  <meta name="description" content="Portfolio for Yusuke" />
-
-  <link rel="stylesheet" href="css/style.css" />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap" rel="stylesheet" />
-
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon_io/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon_io/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon_io/favicon-16x16.png">
-  <link rel="manifest" href="assets/favicon_io/site.webmanifest">
-
-  <!-- Include js-yaml library -->
-  <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.0.0/dist/js-yaml.min.js"></script>
-  <!-- Include content loader -->
-  <script src="js/contentLoader.js" defer></script>
-  <!-- Include header menu logic -->
-  <script src="js/headerMenu.js" defer></script>
-  <!-- Include game logic -->
-  <script src="js/gameLogic.js" defer></script>
-  <script src="js/seedrandom.js"></script>
-  <!-- Include spell checker logic -->
-  <script src="js/spellChecker.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krisanu Sarkar - Portfolio</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --light: #f3f4f6;
+            --dark: #1f2937;
+            --accent: #3b82f6;
+            --text: #374151;
+            --text-light: #6b7280;
+            --background: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 100px 0 50px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('/api/placeholder/1200/400') center/cover;
+            opacity: 0.1;
+            z-index: 0;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .profile-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-right: 30px;
+            border: 4px solid white;
+            background-color: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: var(--primary);
+        }
+        
+        .name-title h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .name-title h2 {
+            font-size: 1.5rem;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+        
+        .contact-links {
+            display: flex;
+            margin-top: 20px;
+        }
+        
+        .contact-links a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            opacity: 0.9;
+            transition: opacity 0.3s;
+        }
+        
+        .contact-links a:hover {
+            opacity: 1;
+        }
+        
+        .contact-links a svg {
+            margin-right: 8px;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li a {
+            display: block;
+            color: var(--text);
+            text-decoration: none;
+            padding: 20px 25px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links li a:hover {
+            color: var(--primary);
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 60px 0;
+        }
+        
+        .section {
+            margin-bottom: 60px;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        /* Education */
+        .education-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .education-table th, .education-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .education-table th {
+            font-weight: 600;
+            color: var(--text-light);
+        }
+        
+        /* Achievements */
+        .achievements-list {
+            list-style: none;
+        }
+        
+        .achievements-list li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        .achievements-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+        
+        /* Experience */
+        .experience-item {
+            margin-bottom: 40px;
+        }
+        
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .experience-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .experience-company {
+            font-weight: 500;
+            color: var(--primary);
+        }
+        
+        .experience-date {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .experience-description {
+            padding-left: 20px;
+            border-left: 2px solid #e5e7eb;
+        }
+        
+        .experience-description ul {
+            list-style: none;
+        }
+        
+        .experience-description li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 10px;
+        }
+        
+        .experience-description li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+        
+        /* Research and Projects */
+        .project-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            margin-bottom: 30px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .project-title {
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .project-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .project-link svg {
+            margin-left: 5px;
+            width: 16px;
+            height: 16px;
+        }
+        
+        .project-description {
+            margin-top: 15px;
+        }
+        
+        .project-description ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .project-description li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 10px;
+        }
+        
+        .project-description li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+        
+        /* Skills */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .skill-category {
+            margin-bottom: 20px;
+        }
+        
+        .skill-category h3 {
+            font-size: 1.1rem;
+            color: var(--text);
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 8px;
+        }
+        
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .skill-tag {
+            background-color: #e5e7eb;
+            color: var(--text);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-block;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        .footer-links {
+            margin-bottom: 20px;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.6;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .profile-info {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-pic {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            
+            .contact-links {
+                justify-content: center;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+            }
+            
+            .experience-header {
+                flex-direction: column;
+            }
+            
+            .experience-date {
+                margin-top: 5px;
+            }
+        }
+    </style>
 </head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-N4R4XMGYC2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-N4R4XMGYC2');
-</script>
-
 <body>
-  <header class="header">
-    <div class="header__content">
-      <div class="header__main">
-        <ul class="header__links">
-          <!-- Links will be injected here -->
-        </ul>
-        <div class="header__main-ham-menu-cont">
-          <img
-            src="./assets/svg/ham-menu.svg"
-            alt="hamburger menu"
-            class="header__main-ham-menu"
-          />
-          <img
-            src="./assets/svg/ham-menu-close.svg"
-            alt="hamburger menu close"
-            class="header__main-ham-menu-close d-none"
-          />
-        </div>
-      </div>
-    </div>
-    <div class="header__sm-menu">
-      <div class="header__sm-menu-content">
-        <ul class="header__sm-menu-links">
-          <!-- Links will be injected here -->
-        </ul>
-      </div>
-    </div>
-  </header>
-
-  <section id="about" class="about sec-pad">
-    <div class="container">
-      <h2 class="heading heading-sec heading-sec__mb-med">
-        <span class="heading-sec__main"></span>
-        <span class="heading-sec__sub"></span>
-      </h2>
-      <div class="row">
-        <div class="col-lg-6 d-flex align-items-center">
-          <div class="about__content-main">
-            <img src="" alt="" class="about__content-image">
-            <h3 class="about__content-title"></h3>
-            <div class="home-hero__socials">
-              <!-- Social links will be injected here -->
+    <header>
+        <div class="container header-content">
+            <div class="profile-info">
+                <div class="profile-pic">KS</div>
+                <div class="name-title">
+                    <h1>Krisanu Sarkar</h1>
+                    <h2>B.Tech Mechanical Engineering | IIT Bombay</h2>
+                    <div class="contact-links">
+                        <a href="mailto:">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+                            </svg>
+                            Email
+                        </a>
+                        <a href="#" target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
+                            </svg>
+                            LinkedIn
+                        </a>
+                        <a href="#" target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                            </svg>
+                            Github
+                        </a>
+                        <a href="tel:+916289801701">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+                            </svg>
+                            +91-6289801701
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div class="about__content-details">
-              <p class="about__content-details-para"></p>
-            </div>
-          </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Project sections will be injected here -->
-
-  <section id="quiz" class="home-hero">
-    <div class="home-hero__content">
-      <h1 class="heading-primary">
-        <span id="quiz-main-heading"></span>
-      </h1>
-      
-      <!-- How to play section -->
-      <div id="howToPlaySection" class="home-hero__info">
-        <p class="text-primary">
-          <strong id="howToPlayText"></strong> <br>
-        </p>
-      </div>
-      <div class="home-hero__cta">
-        <input type="text" id="guessInput" placeholder="Enter your guess">
-        <button onclick="submitGuess()" id="quizbtn" class="btn btn--bg"></button>
-        <span id="hintIcon" class="hint-icon" onclick="hint()">
-          <img src="assets/png/hint.png" alt="Hint Icon" width="40" height="40">
-        </span>
-        <p id="result"></p>
-        <ul id="attemptHistory"></ul>
-      </div>
-    </div>
-  </section>
-
-  <footer class="main-footer">
-    <div class="main-container">
-      <div class="main-footer__upper row">
-        <div class="col-md-6 main-footer__row-1">
-          <h2 class="heading heading-sm main-footer__heading-sm">
-            <span>Social</span>
-          </h2>
-          <div class="main-footer__social-cont mt-3">
-            <!-- Social links will be injected here -->
-          </div>
+    </header>
+    
+    <nav>
+        <div class="container nav-container">
+            <ul class="nav-links">
+                <li><a href="#education">Education</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#research">Research</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#responsibilities">Responsibilities</a></li>
+            </ul>
         </div>
-        <div class="col-md-6 main-footer__row-2">
-          <p class="main-footer__short-desc mt-3" id="footer-description"></p>
-        </div>
-      </div>
-      <div class="main-footer__lower mt-5 text-center">
-        <a rel="noreferrer" target="_blank" href="https://github.com/Yusuke710/Contextofolio.github.io" id="footer-portofolio-link" class="text-white"></a> 
-      </div>
-    </div>
-  </footer>
-
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+    </nav>
+    
+    <main class="main-content">
+        <div class="container">
+            <section id="education" class="section">
+                <h2 class="section-title">Education</h2>
+                <table class="education-table">
+                    <thead>
+                        <tr>
+                            <th>Degree</th>
+                            <th>Institution</th>
+                            <th>Year</th>
+                            <th>CPI/%</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>B.Tech Mechanical Engineering</td>
+                            <td>IIT Bombay</td>
+                            <td>2026</td>
+                            <td>8.87</td>
+                        </tr>
+                        <tr>
+                            <td>Intermediate (CBSE)</td>
+                            <td>Don Bosco</td>
+                            <td>2021</td>
+                            <td>96.62%</td>
+                        </tr>
+                        <tr>
+                            <td>Matriculation (CBSE)</td>
+                            <td>Don Bosco</td>
+                            <td>2019</td>
+                            <td>94.48%</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="margin-top: 20px;">Pursuing Minor in Artificial Intelligence and Data Science from C-MInDS, IIT-Bombay</p>
+                
+                <h3 style="margin-top: 30px; font-size: 1.3rem; color: var(--dark);">Scholastic Achievements</h3>
+                <ul class="achievements-list">
+                    <li>Attained Department Rank 19 among 207 students in the department of Mechanical Engineering ('23)</li>
+                    <li>Secured an All India Rank of 1093 among more than 1,50,000 aspirants in the IIT-JEE Advanced exam ('21)</li>
+                    <li>Recipient of the prestigious Kishore Vaigyanik Protsahan Yojana (KVPY) fellowship with AIR 1785 ('20)</li>
+                </ul>
+            </section>
+            
+            <section id="experience" class="section">
+                <h2 class="section-title">Professional Experience</h2>
+                
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div>
+                            <div class="experience-title">Undergraduate Researcher</div>
+                            <div class="experience-company">Prof Kshitij Jadhav & Prof Ganesh Ramakrishnan | Research and Development KCDH, IIT-Bombay</div>
+                        </div>
+                        <div class="experience-date">Sep '24 - Present</div>
+                    </div>
+                    <div class="experience-description">
+                        <ul>
+                            <li>Researching on different GAN architectures under federated settings for medical image dataset augmentation</li>
+                            <li>Collaborating with TATA Memorial Hospital & Bordeaux Neurocampus, France to curate medical health datasets</li>
+                            <li>Utilising federated learning techniques like co-distillation to ensure data privacy among medical institutions</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <div>
+                            <div class="experience-title">Computer Vision Engineer</div>
+                            <div class="experience-company">Research and Development | Internship Myelin Foundry</div>
+                        </div>
+                        <div class="experience-date">Jun '24 - Aug '24</div>
+                    </div>
+                    <div class="experience-description">
+                        <ul>
+                            <li>Implemented PolylaneNet model for advanced lane detection, real-time road navigation, enabling accurate identification of lanes, including curves and straight paths</li>
+                            <li>Contributed to the development of a faster road sign detection and face detection models, enhancing the accuracy of object recognition systems in dynamic, real-world environments</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="research" class="section">
+                <h2 class="section-title">Research and Publications</h2>
+                
+                <div class="project-card">
+                    <div class="project-title">
+                        NeuroPlastic SOM
+                        <span>Publishing in cikm2024.org in May</span>
+                    </div>
+                    <div>Guide: Prof. Kshitij Jadav, IIT Bombay</div>
+                    <div class="project-description">
+                        <ul>
+                            <li>Developed an enhanced SOM incorporating synaptic decay, neurogenesis, and memory forgetting, enabling adaptive learning for feature ranking and clustering.</li>
+                            <li>Designed an innovative feature ranking methodology, leveraging neuroplasticity-inspired mechanisms to improve feature selection accuracy, tested on the BRCA and ROSMAP dataset with strong performance.</li>
+                            <li>Evaluated NPSOM against traditional models like GSOM and PCA, demonstrating superior clustering accuracy and adaptability to evolving data distributions, showcasing its real-world applicability in high-dimensional datasets.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-title">
+                        EGD Optimizer
+                        <span>Paper coming soon</span>
+                    </div>
+                    <div class="project-description">
+                        <ul>
+                            <li>Presented an algorithm for the Exploratory Gradient Descent (EGD) optimizer, refining learning rate adaptation, RMSProp updates, and an evolutionary perturbation mechanism.</li>
+                            <li>Evaluated EGD on CNN training and non-convex classification tasks, demonstrating improved performance compared to Adam and RMSProp of faster and better convergence.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="projects" class="section">
+                <h2 class="section-title">Key Projects</h2>
+                
+                <div class="project-card">
+                    <div class="project-title">
+                        Multi-Agent AI Scientist System
+                        <a href="#" class="project-link">
+                            Project Link
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+                                <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="project-description">
+                        <ul>
+                            <li>Developed a fully autonomous multi-agent AI system that executes the entire research pipeline, from idea refinement to manuscript preparation, using only the Gemini API via GenAI.</li>
+                            <li>Designed specialized agents for idea generation, critiquing, code execution, error handling, literature review, citation, writing, and self-review, ensuring iterative refinement and collaborative research.</li>
+                            <li>Integrated Gemini API for LLM-based operations, generating submission-ready research papers with code, datasets, results, and supplementary materials.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-title">
+                        VideoGPT | Independent Research Project
+                        <span>May '24 - July '24</span>
+                    </div>
+                    <div class="project-description">
+                        <ul>
+                            <li>Developed a system capable of performing various tasks, answering prompts—including generating detailed notes—from a 1.5-hour video in just 2 minutes, showcasing far better adaptability and processing speed than GPT4o.</li>
+                            <li>Designed a generative LLM model that integrates keyframe extraction, RRDB-enhanced frame embeddings, and a multimodal architecture, enabling versatile task execution from video based on prompts.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-title">
+                        DeepCarlsen | Seasons of Code | Web and Coding Club
+                        <span>May '23 - July '23</span>
+                    </div>
+                    <div class="project-description">
+                        <ul>
+                            <li>Developed a neural network for chess, achieving grandmaster-level performance without prior rule knowledge.</li>
+                            <li>Employed a multi-stage approach, training a deep autoencoder (Pos2Vec) as a winning position predictor.</li>
+                            <li>Improved model training using Numba's JIT, enhancing performance and accelerating chess program training.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-title">
+                        Project-Generator | Independent Research Project
+                        <span>Jan '25 - Feb '25</span>
+                    </div>
+                    <div class="project-description">
+                        <ul>
+                            <li>Engineered a Python-based Agentic AI Project Generator that processes user prompts to dynamically generate project files and directory structures, streamlining project initiation and boosting developer productivity.</li>
+                            <li>Developed an intelligent template integration system that adapts to various project requirements, automatically creating relevant boilerplate code and configuration files based on user input.</li>
+                            <li>Implemented a robust command-line interface (CLI) that efficiently interprets prompts.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="skills" class="section">
+                <h2 class="section-title">Technical Skills</h2>
+                
+                <div class="skills-container">
+                    <div class="skill-category">
+                        <h3>Programming</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">C</span>
+                            <span class="skill-tag">C++</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">Haskell</span>
+                            <span class="skill-tag">Django</span>
+                            <span class="skill-tag">NodeJS</span>
+                            <span class="skill-tag">Flutter</span>
+                            <span class="skill-tag">OpenCV</span>
+                            <span class="skill-tag">LaTeX</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>Data Science</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">PyTorch</span>
+                            <span class="skill-tag">TensorFlow</span>
+                            <span class="skill-tag">NNabla</span>
+                            <span class="skill-tag">CUDA</span>
+                            <span class="skill-tag">SciPy</span>
+                            <span class="skill-tag">NumPy</span>
+                            <span class="skill-tag">Matplotlib</span>
+                            <span class="skill-tag">Pandas</span>
+                            <span class="skill-tag">BeautifulSoup</span>
+                            <span class="skill-tag">Scikit-learn</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>Tools</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">GNU/Linux</span>
+                            <span class="skill-tag">Git</span>
+                            <span class="skill-tag">Bash</span>
+                            <span class="skill
