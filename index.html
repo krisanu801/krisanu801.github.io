@@ -470,38 +470,26 @@
             background-color: #f8f9fa;
         }
         
-        .timeline {
-            position: relative;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        
         .timeline::after {
-            content: '';
-            position: absolute;
-            width: 4px;
-            background-color: var(--primary);
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            margin-left: -2px;
+            left: 31px; /* Move the line to the left side for all screen sizes */
         }
-        
+
         .timeline-item {
-            padding: 10px 40px;
-            position: relative;
-            width: 50%;
-            box-sizing: border-box;
-            margin-bottom: 30px;
-        }
-        
-        .timeline-item:nth-child(odd) {
+            width: 100%;
+            padding-left: 70px;
+            padding-right: 25px;
             left: 0;
-            text-align: right;
+            text-align: left;
         }
-        
+
+        .timeline-item:nth-child(odd)::after,
+        .timeline-item:nth-child(even)::after {
+            left: 18px;
+            right: auto;
+        }
+
         .timeline-item:nth-child(even) {
-            left: 50%;
+            left: 0;
         }
         
         .timeline-item::after {
